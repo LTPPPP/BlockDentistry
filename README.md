@@ -46,8 +46,8 @@ A blockchain-based system for tracking dental equipment throughout its lifecycle
 1. Clone the repository:
 
    ```
-   git clone https://github.com/yourusername/dental-equipment-blockchain.git
-   cd dental-equipment-blockchain
+   git clone https://github.com/LTPPPP/BlockDentistry.git
+   cd BlockDentistry
    ```
 
 2. Create and activate a virtual environment:
