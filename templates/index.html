@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dental Equipment Blockchain System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .tab {
+            padding: 10px 15px;
+            cursor: pointer;
+            margin-right: 5px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .tab.active {
+            background-color: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+
+        .form-container {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 0 5px 5px 5px;
+            background-color: #f9f9f9;
+        }
+
+        .form-container.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .response-container {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+            display: none;
+        }
+
+        .response-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .response-content {
+            white-space: pre-wrap;
+            font-family: monospace;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+
+        .chain-container {
+            margin-top: 20px;
+        }
+
+        .action-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Dental Equipment Blockchain System</h1>
+
+    <div class="tabs">
+        <div class="tab active" onclick="showTab('register')">Register Equipment</div>
+        <div class="tab" onclick="showTab('transfer')">Transfer Equipment</div>
+        <div class="tab" onclick="showTab('maintenance')">Record Maintenance</div>
+        <div class="tab" onclick="showTab('sterilization')">Update Sterilization</div>
+        <div class="tab" onclick="showTab('view')">View Chain</div>
+    </div>
+
+    <!-- Register Equipment Form -->
+    <div id="register-container" class="form-container active">
+        <h2>Register New Dental Equipment</h2>
+        <form id="register-form">
+            <div class="form-group">
+                <label for="name">Equipment Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="manufacturer">Manufacturer:</label>
+                <input type="text" id="manufacturer" name="manufacturer" required>
+            </div>
+            <div class="form-group">
+                <label for="model">Model:</label>
+                <input type="text" id="model" name="model" required>
+            </div>
+            <div class="form-group">
+                <label for="serial_number">Serial Number:</label>
+                <input type="text" id="serial_number" name="serial_number" required>
+            </div>
+            <div class="form-group">
+                <label for="manufacturing_date">Manufacturing Date:</label>
+                <input type="date" id="manufacturing_date" name="manufacturing_date" required>
+            </div>
+            <div class="form-group">
+                <label for="expiry_date">Expiry Date (Optional):</label>
+                <input type="date" id="expiry_date" name="expiry_date">
+            </div>
+            <div class="form-group">
+                <label for="category">Category (Optional):</label>
+                <select id="category" name="category">
+                    <option value="">Select Category</option>
+                    <option value="diagnostic">Diagnostic Equipment</option>
+                    <option value="treatment">Treatment Equipment</option>
+                    <option value="surgical">Surgical Equipment</option>
+                    <option value="laboratory">Laboratory Equipment</option>
+                    <option value="sterilization">Sterilization Equipment</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="registered_by">Registered By:</label>
+                <input type="text" id="registered_by" name="registered_by" required>
+            </div>
+            <div class="form-group">
+                <label for="certification_info">Certification Information (Optional):</label>
+                <textarea id="certification_info" name="certification_info"></textarea>
+            </div>
+            <button type="button" onclick="registerEquipment()">Register Equipment</button>
+        </form>
+    </div>
+
+    <!-- Transfer Equipment Form -->
+    <div id="transfer-container" class="form-container">
+        <h2>Transfer Equipment Ownership</h2>
+        <form id="transfer-form">
+            <div class="form-group">
+                <label for="equipment_id_transfer">Equipment ID:</label>
+                <input type="text" id="equipment_id_transfer" name="equipment_id" required>
+            </div>
+            <div class="form-group">
+                <label for="sender_transfer">Current Owner (Sender):</label>
+                <input type="text" id="sender_transfer" name="sender" required>
+            </div>
+            <div class="form-group">
+                <label for="receiver_transfer">New Owner (Receiver):</label>
+                <input type="text" id="receiver_transfer" name="receiver" required>
+            </div>
+            <div class="form-group">
+                <label for="location_transfer">New Location:</label>
+                <input type="text" id="location_transfer" name="location" required>
+            </div>
+            <div class="form-group">
+                <label for="notes_transfer">Notes (Optional):</label>
+                <textarea id="notes_transfer" name="notes"></textarea>
+            </div>
+            <button type="button" onclick="transferEquipment()">Transfer Equipment</button>
+        </form>
+    </div>
+
+    <!-- Maintenance Record Form -->
+    <div id="maintenance-container" class="form-container">
+        <h2>Record Equipment Maintenance</h2>
+        <form id="maintenance-form">
+            <div class="form-group">
+                <label for="equipment_id_maintenance">Equipment ID:</label>
+                <input type="text" id="equipment_id_maintenance" name="equipment_id" required>
+            </div>
+            <div class="form-group">
+                <label for="maintenance_type">Maintenance Type:</label>
+                <select id="maintenance_type" name="maintenance_type" required>
+                    <option value="">Select Type</option>
+                    <option value="routine">Routine Checkup</option>
+                    <option value="repair">Repair</option>
+                    <option value="calibration">Calibration</option>
+                    <option value="upgrade">Upgrade/Update</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="details_maintenance">Maintenance Details:</label>
+                <textarea id="details_maintenance" name="details" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="performed_by_maintenance">Performed By:</label>
+                <input type="text" id="performed_by_maintenance" name="performed_by" required>
+            </div>
+            <div class="form-group">
+                <label for="date_maintenance">Date (Optional - defaults to current time):</label>
+                <input type="datetime-local" id="date_maintenance" name="date">
+            </div>
+            <button type="button" onclick="recordMaintenance()">Record Maintenance</button>
+        </form>
+    </div>
+
+    <!-- Sterilization Update Form -->
+    <div id="sterilization-container" class="form-container">
+        <h2>Update Equipment Sterilization Status</h2>
+        <form id="sterilization-form">
+            <div class="form-group">
+                <label for="equipment_id_sterilization">Equipment ID:</label>
+                <input type="text" id="equipment_id_sterilization" name="equipment_id" required>
+            </div>
+            <div class="form-group">
+                <label for="status_sterilization">Sterilization Status:</label>
+                <select id="status_sterilization" name="status" required>
+                    <option value="">Select Status</option>
+                    <option value="true">Sterilized</option>
+                    <option value="false">Not Sterilized</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="method_sterilization">Sterilization Method:</label>
+                <select id="method_sterilization" name="method">
+                    <option value="">Select Method</option>
+                    <option value="autoclave">Autoclave</option>
+                    <option value="chemical">Chemical</option>
+                    <option value="uv">UV Light</option>
+                    <option value="heat">Dry Heat</option>
+                    <option value="gas">Ethylene Oxide Gas</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="performed_by_sterilization">Performed By:</label>
+                <input type="text" id="performed_by_sterilization" name="performed_by" required>
+            </div>
+            <div class="form-group">
+                <label for="date_sterilization">Date (Optional - defaults to current time):</label>
+                <input type="datetime-local" id="date_sterilization" name="date">
+            </div>
+            <button type="button" onclick="updateSterilization()">Update Sterilization</button>
+        </form>
+    </div>
+
+    <!-- View Chain -->
+    <div id="view-container" class="form-container">
+        <h2>Blockchain Operations</h2>
+        <div class="action-buttons">
+            <button type="button" onclick="getChain()">View Full Blockchain</button>
+            <button type="button" onclick="mineBlock()">Mine Block</button>
+        </div>
+        <div class="form-group" style="margin-top: 20px;">
+            <label for="equipment_id_view">View Equipment History:</label>
+            <input type="text" id="equipment_id_view" name="equipment_id" placeholder="Enter Equipment ID">
+            <button type="button" onclick="getEquipmentHistory()" style="margin-top: 10px;">Get History</button>
+        </div>
+    </div>
+
+    <!-- Response Display -->
+    <div id="response-container" class="response-container">
+        <div class="response-title">Response:</div>
+        <div id="response-content" class="response-content"></div>
+    </div>
+
+    <script>
+        // Show the selected tab
+        function showTab(tabName) {
+            // Hide all containers
+            document.querySelectorAll('.form-container').forEach(container => {
+                container.classList.remove('active');
+            });
+
+            // Show the selected container
+            document.getElementById(tabName + '-container').classList.add('active');
+
+            // Update tab styling
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Find the clicked tab and mark it as active
+            const tabs = document.querySelectorAll('.tab');
+            for (let i = 0; i < tabs.length; i++) {
+                if (tabs[i].textContent.toLowerCase().includes(tabName.toLowerCase())) {
+                    tabs[i].classList.add('active');
+                    break;
+                }
+            }
+        }
+
+        // Show response
+        function showResponse(data) {
+            const container = document.getElementById('response-container');
+            const content = document.getElementById('response-content');
+
+            content.textContent = JSON.stringify(data, null, 2);
+            container.style.display = 'block';
+
+            // Scroll to the response
+            container.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // API call helper
+        async function callApi(endpoint, method, data = null) {
+            try {
+                const options = {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                };
+
+                if (data) {
+                    options.body = JSON.stringify(data);
+                }
+
+                const response = await fetch(`/api/${endpoint}`, options);
+                const responseData = await response.json();
+
+                showResponse(responseData);
+                return responseData;
+            } catch (error) {
+                showResponse({ error: error.message });
+                console.error('API Error:', error);
+            }
+        }
+
+        // Form to JSON helper
+        function formToJson(formId) {
+            const form = document.getElementById(formId);
+            const formData = new FormData(form);
+            const data = {};
+
+            for (let [key, value] of formData.entries()) {
+                // Skip empty values except for notes which can be empty
+                if (value !== "" || key === 'notes') {
+                    // Handle certification_info as JSON
+                    if (key === 'certification_info' && value) {
+                        try {
+                            data[key] = JSON.parse(value);
+                        } catch (e) {
+                            data[key] = value; // Use as string if not valid JSON
+                        }
+                    } else {
+                        data[key] = value;
+                    }
+                }
+            }
+
+            return data;
+        }
+
+        // Register Equipment
+        async function registerEquipment() {
+            const data = formToJson('register-form');
+
+            // Convert dates to ISO strings
+            if (data.manufacturing_date) {
+                data.manufacturing_date = new Date(data.manufacturing_date).toISOString().split('T')[0];
+            }
+            if (data.expiry_date) {
+                data.expiry_date = new Date(data.expiry_date).toISOString().split('T')[0];
+            }
+
+            await callApi('equipment/register', 'POST', data);
+        }
+
+        // Transfer Equipment
+        async function transferEquipment() {
+            const data = formToJson('transfer-form');
+            await callApi('equipment/transfer', 'POST', data);
+        }
+
+        // Record Maintenance
+        async function recordMaintenance() {
+            const data = formToJson('maintenance-form');
+
+            // Convert date to ISO string if provided
+            if (data.date) {
+                data.date = new Date(data.date).toISOString();
+            }
+
+            await callApi('equipment/maintenance', 'POST', data);
+        }
+
+        // Update Sterilization
+        async function updateSterilization() {
+            const data = formToJson('sterilization-form');
+
+            // Convert boolean string to actual boolean
+            if (data.status === 'true') data.status = true;
+            if (data.status === 'false') data.status = false;
+
+            // Convert date to ISO string if provided
+            if (data.date) {
+                data.date = new Date(data.date).toISOString();
+            }
+
+            await callApi('equipment/sterilization', 'POST', data);
+        }
+
+        // Get Chain
+        async function getChain() {
+            await callApi('get_chain', 'GET');
+        }
+
+        // Mine Block
+        async function mineBlock() {
+            await callApi('mine_block', 'GET');
+        }
+
+        // Get Equipment History
+        async function getEquipmentHistory() {
+            const equipmentId = document.getElementById('equipment_id_view').value;
+            if (!equipmentId) {
+                showResponse({ error: 'Please enter an Equipment ID' });
+                return;
+            }
+
+            await callApi(`equipment/${equipmentId}`, 'GET');
+        }
+    </script>
+</body>
+
+</html>
